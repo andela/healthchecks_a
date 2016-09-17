@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import warnings
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 HOST = "localhost"
@@ -58,6 +59,7 @@ AUTHENTICATION_BACKENDS = (
 
 ROOT_URLCONF = 'hc.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -98,6 +100,15 @@ if os.environ.get("DB") == "postgres":
             'USER':     'postgres',
             'TEST': {'CHARSET': 'UTF8'}
         }
+
+    
+    # Update database configuration with $DATABASE_URL to integrate
+    # with Heroku.
+    
+    # import dj_database_url
+    # db_from_env = dj_database_url.config(conn_max_age=500)
+    # DATABASES['default'].update(db_from_env)
+    
     }
 
 if os.environ.get("DB") == "mysql":

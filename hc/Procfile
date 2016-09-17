@@ -1,0 +1,1 @@
+web: gunicorn cronchecks.wsgi --log-file -
