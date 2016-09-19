@@ -1,1 +1,1 @@
-web: gunicorn cronchecks.wsgi --log-file -
+web: gunicorn hc.wsgi --log-file -
