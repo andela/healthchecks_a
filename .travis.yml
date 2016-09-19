@@ -14,6 +14,6 @@ addons:
   code_climate:
         repo_token: 7a232fcf4e6798719ca6e8ff360a106ce48e04cb2727442f46e23aa166bb3a6a
 script:
-  - coverage run --omit=*/tests/* --source=hc manage.py test
+  - coverage run --source=hc manage.py test
 after_success: coveralls
 cache: pip
