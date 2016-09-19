@@ -91,9 +91,6 @@ DATABASES = {
     }
 }
 
-# Update database configuration with $DATABASE_URL to integrate
-    # with Heroku.
-DATABASES = { 'default': dj_database_url.config() }
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
@@ -119,6 +116,13 @@ if os.environ.get("DB") == "mysql":
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
+
+
+if os.environ.get("APP_ENV") == "prod":
+    # Update database configuration with $DATABASE_URL to integrate
+    # with Heroku.
+    DATABASES = { 'default': dj_database_url.config() }
+
 
 LANGUAGE_CODE = 'en-us'
 
