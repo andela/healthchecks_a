@@ -1,4 +1,10 @@
+[![Code Climate](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/badges/fbf506bf5ad887d0c1fa/gpa.svg)](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/feed)
+[![Test Coverage](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/badges/fbf506bf5ad887d0c1fa/coverage.svg)](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/coverage)
+[![Issue Count](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/badges/fbf506bf5ad887d0c1fa/issue_count.svg)](https://codeclimate.com/repos/57dbec80e31cba7e3300187b/feed)
+[![Build Status](https://travis-ci.org/andela/healthchecks_a.svg?branch=travisci_integration)](https://travis-ci.org/andela/healthchecks_a)
+
 # healthchecks
+
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
 
