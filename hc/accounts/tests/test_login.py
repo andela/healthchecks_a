@@ -3,8 +3,7 @@ from django.core import mail
 from django.test import TestCase
 from hc.api.models import Check
 
-
-class LoginTestCase(TestCase):
+class LoginTestCase(TestCase): # AuthenticationTestCase
 
     def test_it_sends_link(self):
         check = Check()
@@ -20,18 +19,25 @@ class LoginTestCase(TestCase):
         assert r.status_code == 302
 
         ### Assert that a user was created
+        self.assertEqual(User.objects.count(),1)  
 
         # And email sent
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Log in to healthchecks.io')
+        
         ### Assert contents of the email body
+        self.assertIn('Hello,\n\nTo log into healthchecks.io, please open the link below:\n\nhttp://localhost:8000/accounts/check_token/',\
+         mail.outbox[0].body)
+        # Checks that the string is in the email body of the first email in outbox 
 
         ### Assert that check is associated with the new user
-
+        check2 = Check.objects.get(code=check.code)
+        self.assertEqual(str(check2.code), session['welcome_code'], msg=check2.code)
+        
+    
     def test_it_pops_bad_link_from_session(self):
         self.client.session["bad_link"] = True
         self.client.get("/accounts/login/")
         assert "bad_link" not in self.client.session
 
         ### Any other tests?
-
