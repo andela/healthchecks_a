@@ -123,7 +123,7 @@ class ProfileTestCase(BaseTestCase):
     ### Test it creates and revokes API key
     def test_it_creates_api_key(self):
         self.client.login(username="alice@example.org", password="password")
-        dummy_data = {'create_api_key': '1'}
+        dummy_data = {'create_api_key': ''}
         r = self.client.post("/accounts/profile/", dummy_data)
         self.assertEqual(r.status_code, 200)
 
@@ -132,7 +132,7 @@ class ProfileTestCase(BaseTestCase):
 
     def test_it_revoke_api_key(self):
         self.client.login(username="alice@example.org", password="password")
-        dummy_data = {'revoke_api_key': '1'}
+        dummy_data = {'revoke_api_key': ''}
         r = self.client.post("/accounts/profile/", dummy_data)
         self.assertEqual(r.status_code, 200)
 
