@@ -20,6 +20,6 @@ class ApiAdminTestCase(BaseTestCase):
         ch  .save()
 
         ### Assert for the push bullet
-        r = client.get("admin/api/channel/")
-        self.assertContains(r, "Pushbullet") #to revisit
+        r = self.client.get("admin/api/channel/")
+        self.assertContains(r, "pushbullet")
 
