@@ -2,6 +2,9 @@ from django.test.utils import override_settings
 
 from hc.api.models import Channel
 from hc.test import BaseTestCase
+from django.contrib.auth.models import User
+from hc.accounts.models import Profile
+
 
 
 @override_settings(PUSHOVER_API_TOKEN="token", PUSHOVER_SUBSCRIPTION_URL="url")
@@ -37,9 +40,14 @@ class AddChannelTestCase(BaseTestCase):
             r = self.client.get(url)
             self.assertContains(r, "Integration Settings", status_code=200)
 
+
     ### Test that the team access works
     def test_team_access_works(self):
-        pass
+        shouldLogIn = self.client.login(username="alice@example.org", password="password")
+        self.assertTrue(shouldLogIn)
+        shouldNotLogIn = self.client.login(username="charles@example.org", password="password")
+        self.assertFalse(shouldNotLogIn)
+
 
     ### Test that bad kinds don't work
     def test_bad_kinds_do_not_work(self):
