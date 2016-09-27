@@ -1,5 +1,8 @@
-import json
+import datetime
 from datetime import timedelta as td
+import json
+import time
+
 from django.utils.timezone import now
 
 from hc.api.models import Check
@@ -53,13 +56,14 @@ class ListChecksTestCase(BaseTestCase):
         self.assertEqual(checks['Alice 2']['ping_url'], self.a2.url())
         self.assertEqual(checks['Alice 2']['status'], self.a2.status)
         ### last_ping, n_pings and pause_url
-        self.assertEqual(checks['Alice 1']['last_ping'], self.a1.last_ping)
+        alice_ping_time = checks['Alice 1']['last_ping']
+        self.assertEqual(alice_ping_time, self.now.isoformat())
         self.assertEqual(checks['Alice 1']['n_pings'], 1)
-        self.assertEqual(checks['Alice1']['pause_url'], self.a1.pause_url)
+        self.assertEqual(checks['Alice 1']['pause_url'], self.a1.to_dict()['pause_url'])
 
-        self.assertEqual(checks['Alice 2']['last_ping'], self.a2.last_ping)
-        self.assertEqual(checks['Alice 2']['n_pings'], 1)
-        self.assertEqual(checks['Alice 2']['pause_url'], self.a2.pause_url)
+        self.assertEqual(checks['Alice 2']['last_ping'], self.a2.last_ping.isoformat())
+        self.assertEqual(checks['Alice 2']['n_pings'], 0)
+        self.assertEqual(checks['Alice 2']['pause_url'], self.a2.to_dict()['pause_url'])
 
 
     def test_it_shows_only_users_checks(self):
