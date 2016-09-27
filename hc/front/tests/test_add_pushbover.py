@@ -38,3 +38,12 @@ class AddPushoverTestCase(BaseTestCase):
         assert r.status_code == 403
 
     ### Test that pushover validates priority
+    # def test_pushover_validates_priority(self):
+    #     self.client.login(username="alice@example.org", password="password")
+    #     r = self.client.get("integrations/add_pushover/")
+    #     self.assertContains(r, "Notification Priority", status_code=200)
+
+    def test_pushover_validates_priority(self):
+        form = {"po_priority": 1}
+        r = self.client.post("/integrations/add_pushover/", form)
+        self.assertEqual(r.status_code, 302)
