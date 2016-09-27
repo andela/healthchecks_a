@@ -17,7 +17,7 @@ class ApiAdminTestCase(BaseTestCase):
         self.client.login(username="alice@example.org", password="password")
 
         ch = Channel(user=self.alice, kind="pushbullet", value="test-token")
-        ch  .save()
+        ch.save()
 
         ### Assert for the push bullet
         r = self.client.get("admin/api/channel/")
