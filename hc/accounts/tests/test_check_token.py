@@ -26,12 +26,9 @@ class CheckTokenTestCase(BaseTestCase):
         form = {"email":"alice@example.org"}
         # Simulates a form field filled with alice's email  
         self.profile.refresh_from_db()
-        # Retrievs Alice's info from db(see BaseTestCase)
+        # Retrieves Alice's info from db(see BaseTestCase)
         r = self.client.post("/accounts/check_token/alice/secret-token")
-        #  
-        self.assertEqual(r.status_code, 301)
-        # self.assertRedirects(r, "/checks/")
-        # Tests that the response r redirects to the /checks/ page 
+        self.assertEqual(r.status_code, 301) 
 
     ### Login with a bad token and check that it redirects
     def test_it_redirects_if_login_done_with_bad_token(self):

@@ -23,11 +23,10 @@ class LoginTestCase(TestCase): # AuthenticationTestCase
 
         # And email sent
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Log in to healthchecks.io')
+        self.assertEqual(mail.outbox[0].subject, 'Log in to cronchecks.io')
         
         ### Assert contents of the email body
-        self.assertIn('Hello,\n\nTo log into healthchecks.io, please open the link below:\n\nhttp://localhost:8000/accounts/check_token/',\
-         mail.outbox[0].body)
+        self.assertIn('https://cronchecks.io/docs/',mail.outbox[0].body)
         # Checks that the string is in the email body of the first email in outbox 
 
         ### Assert that check is associated with the new user
