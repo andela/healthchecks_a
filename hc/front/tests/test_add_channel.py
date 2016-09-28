@@ -50,10 +50,10 @@ class AddChannelTestCase(BaseTestCase):
 
 
     ### Test that bad kinds don't work
-    def test_bad_kinds_dont_work(self):
+    def test_bad_kinds_do_not_work(self):
         self.client.login(username="alice@example.org", password="password")
         bad_kinds = ("dog", "cat", "monkey")
         for bad_kind in bad_kinds:
-            url ="/integrations/add_%s" %bad_kind
+            url = "integrations/add_%s" % bad_kind
             r = self.client.get(url)
             self.assertContains(r, "Not Found", status_code=404)
