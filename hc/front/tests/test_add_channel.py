@@ -56,4 +56,4 @@ class AddChannelTestCase(BaseTestCase):
         for bad_kind in bad_kinds:
             url = "integrations/add_%s" % bad_kind
             r = self.client.get(url)
-            self.assertContains(r, status_code=404)
+            self.assertContains(r, "Not Found", status_code=404)
