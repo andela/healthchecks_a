@@ -139,9 +139,9 @@ STATICFILES_FINDERS = (
 COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'test'
-EMAIL_HOST_USER = 'cronchecks@gmail.com'
+EMAIL_HOST = '---'
+EMAIL_HOST_PASSWORD = '---'
+EMAIL_HOST_USER = '----'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
