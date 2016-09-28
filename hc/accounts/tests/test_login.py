@@ -23,10 +23,10 @@ class LoginTestCase(TestCase): # AuthenticationTestCase
 
         # And email sent
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Log in to cronchecks.io')
+        self.assertEqual(mail.outbox[0].subject, 'Log in to cronchecks.herokuapp.com')
         
         ### Assert contents of the email body
-        self.assertIn('https://cronchecks.io/docs/',mail.outbox[0].body)
+        self.assertIn('https://cronchecks.herokuapp.com/docs/',mail.outbox[0].body)
         # Checks that the string is in the email body of the first email in outbox 
 
         ### Assert that check is associated with the new user

@@ -22,8 +22,8 @@ class ProfileTestCase(BaseTestCase):
 
         ### Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, "Set password on cronchecks.io")
-        self.assertIn("Here's a link to set a password for your account on cronchecks.io:", mail.outbox[0].body)
+        self.assertEqual(mail.outbox[0].subject, "Set password on cronchecks.herokuapp.com")
+        self.assertIn("Here's a link to set a password for your account on cronchecks.herokuapp.com:", mail.outbox[0].body)
 
     def test_it_sends_report(self):
         check = Check(name="Test Check", user=self.alice)
@@ -34,7 +34,7 @@ class ProfileTestCase(BaseTestCase):
         ###Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(mail.outbox[0].subject, "Monthly Report")
-        self.assertIn("This is a monthly report sent by cronchecks.io.", mail.outbox[0].body)
+        self.assertIn("This is a monthly report sent by cronchecks.herokuapp.com.", mail.outbox[0].body)
 
     def test_it_adds_team_member(self):
         self.client.login(username="alice@example.org", password="password")
@@ -54,8 +54,8 @@ class ProfileTestCase(BaseTestCase):
 
         ###Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
-        self.assertIn(mail.outbox[0].subject,"You have been invited to join alice@example.org on cronchecks.io")
-        self.assertIn("alice@example.org invites you to their cronchecks.io", mail.outbox[0].body)
+        self.assertIn(mail.outbox[0].subject,"You have been invited to join alice@example.org on cronchecks.herokuapp.com")
+        self.assertIn("alice@example.org invites you to their cronchecks.herokuapp.com", mail.outbox[0].body)
 
     def test_add_team_member_checks_team_access_allowed_flag(self):
         self.client.login(username="charlie@example.org", password="password")
