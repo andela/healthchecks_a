@@ -47,4 +47,4 @@ class LogTestCase(BaseTestCase):
         url = "/checks/%s/log/" % self.check.code
         self.client.login(username="charlie@example.org", password="password")
         r = self.client.get(url)
-        self.assertEqual(r.status_code == 403)
+        self.assertEqual(r.status_code, 403)
