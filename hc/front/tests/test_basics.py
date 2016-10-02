@@ -18,5 +18,5 @@ class BasicsTestCase(TestCase):
         r = self.client.get("/")
         code = self.client.session["welcome_code"]
         self.assertEqual(r.status_code, 200)
-        self.assertTrue(code != "x")
+        self.assertNotEqual(code, "x")
         self.assertTrue(Check.objects.filter(code=code).exists())

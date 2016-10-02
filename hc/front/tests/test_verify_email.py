@@ -15,7 +15,7 @@ class VerifyEmailTestCase(BaseTestCase):
         url = "/integrations/%s/verify/%s/" % (self.channel.code, token)
 
         r = self.client.post(url)
-        self.assertEqual(r.status_code == 200, r.status_code)
+        self.assertEqual(r.status_code, 200)
 
         channel = Channel.objects.get(code=self.channel.code)
         self.assertTrue(channel.email_verified)
@@ -24,7 +24,7 @@ class VerifyEmailTestCase(BaseTestCase):
         url = "/integrations/%s/verify/bad-token/" % self.channel.code
 
         r = self.client.post(url)
-        self.assertEqual(r.status_code == 200, r.status_code)
+        self.assertEqual(r.status_code, 200)
 
         channel = Channel.objects.get(code=self.channel.code)
         self.assertFalse(channel.email_verified)
