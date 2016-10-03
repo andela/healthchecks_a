@@ -17,7 +17,9 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused")
+    ("paused", "Paused"),
+    ("excess", "Excess"), 
+    ("fine", "Fine")
 )
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
@@ -85,11 +87,17 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
+        timer = self.last_ping + self.timeout + self.grace 
 
-        if self.last_ping + self.timeout + self.grace > now:
+        # Checks whether job alerts are being sent too often
+        if  timer > now:
             return "up"
-
         return "down"
+    
+        for item in timer:
+            if n_pings > 1:
+                return "excess"
+            return "fine" 
 
     def in_grace_period(self):
         if self.status in ("new", "paused"):

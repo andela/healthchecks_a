@@ -6,13 +6,14 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, JsonResponse
 from six import string_types
 
-
+# Decorator that generates uuid as first argument
 def uuid_or_400(f):
     @wraps(f)
     def wrapper(request, *args, **kwds):
         try:
             uuid.UUID(args[0])
-        except ValueError:
+        except ValueError: 
+            # Returns 400 if uuid generated is not as specified 
             return HttpResponseBadRequest()
 
         return f(request, *args, **kwds)
@@ -27,9 +28,12 @@ def check_api_key(f):
     @wraps(f)
     def wrapper(request, *args, **kwds):
         request.json = {}
+        # Creates empty dictionary, with key 'json', but json has no value
         if request.body:
             try:
                 request.json = json.loads(request.body.decode("utf-8"))
+                # Loads decoded contents of request object as a key value for
+                # json key  
             except ValueError:
                 return make_error("could not parse request body")
 
@@ -37,7 +41,7 @@ def check_api_key(f):
             api_key = request.META["HTTP_X_API_KEY"]
         else:
             api_key = request.json.get("api_key", "")
-
+            # Assigns value of the 'api_key' key in the request to variable api_key
         if api_key == "":
             return make_error("wrong api_key")
 
