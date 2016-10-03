@@ -71,6 +71,40 @@ class Profile(models.Model):
 
         emails.report(self.user.email, ctx)
 
+    def send_weekly_report(self): #enable sending of weekly reports
+        now = timezone.now()
+        self.next_report_date = now + timedelta(days=7)
+        self.save()
+
+        token = signing.Signer().sign(uuid.uuid4())
+        path = reverse("hc-unsubscribe-reports", args=[self.user.username])
+        unsub_link = "%s%s?token=%s" % (settings.SITE_ROOT, path, token)
+
+        ctx = {
+            "checks": self.user.check_set.order_by("created"),
+            "now": now,
+            "weekly_unsub_link": unsub_link
+        }
+
+        emails.weekly_report(self.user.email, ctx)
+
+    def send_daily_report(self): #allow sending of daily reports
+        now = timezone.now()
+        self.next_report_date = now + timedelta(days=1)
+        self.save()
+
+        token = signing.Signer().sign(uuid.uuid4())
+        path = reverse("hc-unsubscribe-reports", args=[self.user.username])
+        unsub_link = "%s%s?token=%s" % (settings.SITE_ROOT, path, token)
+
+        ctx = {
+            "checks": self.user.check_set.order_by("created"),
+            "now": now,
+            "daily_unsub_link": unsub_link
+        }
+
+        emails.daily_report(self.user.email, ctx)
+
     def invite(self, user):
         member = Member(team=self, user=user)
         member.save()
