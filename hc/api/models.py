@@ -18,8 +18,7 @@ STATUSES = (
     ("down", "Down"),
     ("new", "New"),
     ("paused", "Paused"),
-    ("excess", "Excess"), 
-    ("fine", "Fine")
+    ("excess", "Excess")
 )
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
@@ -71,7 +70,7 @@ class Check(models.Model):
         return "%s@%s" % (self.code, settings.PING_EMAIL_DOMAIN)
 
     def send_alert(self):
-        if self.status not in ("up", "down"):
+        if self.status not in ("up", "down", "excess"):
             raise NotImplementedError("Unexpected status: %s" % self.status)
 
         errors = []
@@ -87,18 +86,18 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
-        timer = self.last_ping + self.timeout + self.grace 
+        maximum_duration = self.last_ping + self.timeout + self.grace
+        minimum_duration = self.last_ping + self.timeout
 
         # Checks whether job alerts are being sent too often
-        if  timer > now:
+        if  now < maximum_duration and minimum_duration >= now:
             return "up"
+        
+        if now < minimum_duration:
+            return "excess" 
+        # If ping is late, and is not excess then its down
         return "down"
-    
-        for item in timer:
-            if n_pings > 1:
-                return "excess"
-            return "fine" 
-
+          
     def in_grace_period(self):
         if self.status in ("new", "paused"):
             return False

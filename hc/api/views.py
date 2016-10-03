@@ -24,7 +24,7 @@ def ping(request, code):
     check.n_pings = F("n_pings") + 1
     check.last_ping = timezone.now()
     
-    if check.status in ("new", "paused", "fine"):
+    if check.status in ("new", "paused"):
         check.status = "up"
 
     check.save()
