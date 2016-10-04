@@ -61,13 +61,12 @@ def my_checks(request):
 
 @login_required
 def unresolved_checks(request):
-    q = Check.objects.filter(user=request.team.user).order_by("created")
-    y = q.filter(status="down")
-    unresolved_checks = list(y)
+    q = Check.objects.filter(user=request.team.user)
+    unresolved_checks = list(q)
 
     counter = Counter()
     down_tags = set()
-    for check in checks:
+    for check in unresolved_checks:
         status = check.get_status()
         for tag in check.tags_list():
             counter[tag] += 1

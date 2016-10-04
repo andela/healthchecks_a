@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load compress staticfiles %}
 
-{% block title %}Unresolved Checks - cronchecks.herokuapp.com{% endblock %}
+{% block title %}My Checks - cronchecks.herokuapp.com{% endblock %}
 
 
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <h1
+        <h1>
         {% if request.team == request.user.profile %}
-            My Checks
+            Unresolved Checks
         {% else %}
             {{ request.team.team_name }}
         {% endif %}
@@ -20,10 +20,6 @@
         {% for tag, count in tags %}
             {% if tag in down_tags %}
                 <button class="btn btn-danger btn-xs" data-toggle="button">{{ tag }}</button>
-            {% elif tag in grace_tags %}
-                <button class="btn btn-warning btn-xs" data-toggle="button">{{ tag }}</button>
-            {% else %}
-                <button class="btn btn-default btn-xs" data-toggle="button">{{ tag }}</button>
             {% endif %}
         {% endfor %}
     </div>
@@ -42,15 +38,6 @@
     {% endif %}
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-12">
-        <form method="post" action="{% url 'hc-add-check' %}" class="text-center">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg" value="Add Check">
-        </form>
-    </div>
-</div>
-
 <div id="update-name-modal" class="modal">
     <div class="modal-dialog">
         <form id="update-name-form" class="form-horizontal" method="post">

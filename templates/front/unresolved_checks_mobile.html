@@ -2,6 +2,7 @@
 
 <ul id="checks-list" class="visible-xs">
     {% for check in checks %}
+    {% if check.get_status == "down" %}
     <li>
         <h2>
             <span class="{% if not check.name %}unnamed{% endif %}">
@@ -80,5 +81,6 @@
         </div>
 
     </li>
+    {% endif %}
     {% endfor %}
 </ul>

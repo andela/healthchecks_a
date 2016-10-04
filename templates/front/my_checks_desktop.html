@@ -12,6 +12,7 @@
         <th></th>
     </tr>
     {% for check in checks %}
+    {% if check.get_status == "paused" or check.get_status == "up" or check.get_status == "new" %}
     <tr class="checks-row">
         <td class="indicator-cell">
             {% if check.get_status == "new" %}
@@ -24,8 +25,6 @@
                 <span class="status icon-grace"></span>
             {% elif check.get_status == "up" %}
                 <span class="status icon-up"></span>
-            {% elif check.get_status == "down" %}
-                <span class="status icon-down"></span>
             {% endif %}
         </td>
         <td class="name-cell">
@@ -113,6 +112,7 @@
             </div>
         </td>
     </tr>
+    {% endif %}
     {% endfor %}
 
 </table>
