@@ -61,7 +61,7 @@ class CreateCheckTestCase(BaseTestCase):
         ### Make the post request with a missing body and get the response
         r = self.client.post(self.URL, content_type="application/json")
         self.assertEqual(r.status_code, 400)
-        self.assertEqual(r.json()["error"], "wrong api_key", msg=r)
+        self.assertEqual(r.json()["error"], "wrong api_key")
 
     def test_it_handles_invalid_json(self):
         ### Make the post request with invalid json data type
