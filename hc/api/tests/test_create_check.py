@@ -55,7 +55,7 @@ class CreateCheckTestCase(BaseTestCase):
         ### Make the post request and get the response
         r = self.client.post(self.URL, payload, 
             content_type="application/json", HTTP_X_API_KEY="abc")
-        self.assertEqual(r.status_code, 201, r)
+        self.assertEqual(r.status_code, 201)
 
     def test_it_handles_missing_request_body(self):
         ### Make the post request with a missing body and get the response
