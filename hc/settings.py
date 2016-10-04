@@ -18,11 +18,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ENVIRONMENT = os.environ.get('APP_ENV')
 ENV_IS_DEVELOP = not ENVIRONMENT in ('staging', 'prod')
-DEBUG = ENV_IS_DEVELOP
+DEBUG = True
 
 HOST = "localhost" if ENV_IS_DEVELOP else "https://cronchecks.herokuapp.com/"
 SECRET_KEY = "---"
-ALLOWED_HOSTS = ['*'] if ENV_IS_DEVELOP else ['.herokuapp.com', 'https://cronchecks.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 DEFAULT_FROM_EMAIL = 'cronchecks@herokuapp.com'
 USE_PAYMENTS = False
 
@@ -128,7 +128,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000" if DEBUG else "https://cronchecks.herokuapp.com/"
+SITE_ROOT = "http://localhost:8000" if ENV_IS_DEVELOP else "https://cronchecks.herokuapp.com/"
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
