@@ -21,7 +21,7 @@ DEBUG = not ENVIRONMENT in ('staging', 'prod')
 
 HOST = "localhost" if DEBUG else "https://cronchecks.herokuapp.com/"
 SECRET_KEY = "---"
-ALLOWED_HOSTS = ["https://cronchecks.herokuapp.com/"]
+ALLOWED_HOSTS = ['*']
 DEFAULT_FROM_EMAIL = 'cronchecks@herokuapp.com'
 USE_PAYMENTS = False
 
