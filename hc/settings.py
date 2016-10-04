@@ -17,11 +17,12 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ENVIRONMENT = os.environ.get('APP_ENV')
-DEBUG = not ENVIRONMENT in ('staging', 'prod')
+ENV_IS_DEVELOP = not ENVIRONMENT in ('staging', 'prod')
+DEBUG = ENV_IS_DEVELOP
 
-HOST = "localhost" if DEBUG else "https://cronchecks.herokuapp.com/"
+HOST = "localhost" if ENV_IS_DEVELOP else "https://cronchecks.herokuapp.com/"
 SECRET_KEY = "---"
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] if ENV_IS_DEVELOP else ['.herokuapp.com', 'https://cronchecks.herokuapp.com']
 DEFAULT_FROM_EMAIL = 'cronchecks@herokuapp.com'
 USE_PAYMENTS = False
 
