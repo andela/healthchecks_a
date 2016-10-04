@@ -16,11 +16,13 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-HOST = "localhost"
+ENVIRONMENT = os.environ.get('APP_ENV')
+DEBUG = not ENVIRONMENT in ('staging', 'prod')
+
+HOST = "localhost" if DEBUG else "https://cronchecks.herokuapp.com/"
 SECRET_KEY = "---"
-DEBUG = True
-ALLOWED_HOSTS = []
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+ALLOWED_HOSTS = ["https://cronchecks.herokuapp.com/"]
+DEFAULT_FROM_EMAIL = 'cronchecks@herokuapp.com'
 USE_PAYMENTS = False
 
 
@@ -111,7 +113,7 @@ if os.environ.get("DB") == "mysql":
         }
     }
 
-if os.environ.get("APP_ENV") == "prod":
+if ENVIRONMENT == "prod":
     DATABASES['default'] = dj_database_url.config()
 
 
@@ -125,7 +127,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000"
+SITE_ROOT = "http://localhost:8000" if DEBUG else "https://cronchecks.herokuapp.com/"
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
