@@ -240,8 +240,6 @@ def log(request, code):
         # Prepare early flag for next ping to come
         early = older.created + check.timeout > newer.created + check.grace
         if early:
-            send_mail('Subject here', 'Here is the message.', 'from@example.com', ['ruth.ogendi@andela.com', 'kimani.ndegwa@andela.com'], fail_silently=False)
-
             ctx = {
                 "check.name_then_code": check.name_then_code
             }
