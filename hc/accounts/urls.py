@@ -20,10 +20,10 @@ urlpatterns = [
         views.unsubscribe_reports, name="hc-unsubscribe-reports") , #monthly
 
     url(r'^unsubscribe_weekly_reports/([\w-]+)/$', 
-        views.unsubscribe_weekly_reports, name="hc-unsubscribe-weekly-reports")#weekly
+        views.unsubscribe_weekly_reports, name="hc-unsubscribe-weekly-reports"),#weekly
 
     url(r'^unsubscribe_daily_reports/([\w-]+)/$', 
-        views.unsubscribe_daily_reports name="hc-unsubscribe-daily-reports")#daily
+        views.unsubscribe_daily_reports, name="hc-unsubscribe-daily-reports"),#daily
 
     url(r'^set_password/([\w-]+)/$',
         views.set_password, name="hc-set-password"),

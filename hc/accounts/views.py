@@ -245,7 +245,7 @@ def set_password(request, token):
 
     return render(request, "accounts/set_password.html", {})
 
-
+# Unsubscribe monthly reports
 def unsubscribe_reports(request, username):
     try:
         signing.Signer().unsign(request.GET.get("token"))
@@ -258,6 +258,27 @@ def unsubscribe_reports(request, username):
 
     return render(request, "accounts/unsubscribed.html")
 
+# Weekly reports unsub
+def unsubscribe_weekly_reports(request, username):
+    try:
+        signing.Signer().unsign(request.GET.get("token"))
+    except:
+        return HttpResponseBadRequest()
+
+    user = User.objects.get(username=uusername)
+    user.profile.weekly_reports_allowed = False
+    user.profile.save()
+
+#daily reports unsub
+def unsubscribe_daily_reports(request, username):
+    try:
+        signing.Signer().unsign(request.GET.get("token"))
+    except:
+        return HttpResponseBadRequest()
+
+    user = User.objects.get(username=uusername)
+    user.profile.daily_reports_allowed = False
+    user.profile.save()
 
 def switch_team(request, target_username):
     other_user = User.objects.get(username=target_username)
