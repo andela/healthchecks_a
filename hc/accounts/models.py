@@ -111,7 +111,7 @@ class Profile(models.Model):
             "unsub_link": unsub_link
         }
 
-        emails.daily_report(self.user.email, ctx)
+        emails.daily_reports_allowed_report(self.user.email, ctx)
 
     def invite(self, user):
         member = Member(team=self, user=user)
