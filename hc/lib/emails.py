@@ -26,3 +26,6 @@ def verify_email(to, ctx):
 
 def report(to, ctx):
     send("report", to, ctx)
+
+def excess(to, ctx):
+	send("excess", to, ctx)

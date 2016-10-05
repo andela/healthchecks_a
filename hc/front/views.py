@@ -3,20 +3,24 @@ from datetime import timedelta as td
 from itertools import tee
 
 import requests
+from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import Http404, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.six.moves.urllib.parse import urlencode
+from django.contrib.auth.models import User
 from hc.api.decorators import uuid_or_400
 from hc.api.models import DEFAULT_GRACE, DEFAULT_TIMEOUT, Channel, Check, Ping
 from hc.front.forms import (AddChannelForm, AddWebhookForm, NameTagsForm,
                             TimeoutForm)
+from hc.lib import emails
+from hc.accounts.models import Profile
 
 
 # from itertools recipes:
@@ -235,6 +239,13 @@ def log(request, code):
 
         # Prepare early flag for next ping to come
         early = older.created + check.timeout > newer.created + check.grace
+        if early:
+            send_mail('Subject here', 'Here is the message.', 'from@example.com', ['ruth.ogendi@andela.com', 'kimani.ndegwa@andela.com'], fail_silently=False)
+
+            ctx = {
+                "check.name_then_code": check.name_then_code
+            }
+            emails.excess(check.user.email, ctx)
 
     reached_limit = len(pings) > limit
 
