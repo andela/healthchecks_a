@@ -85,9 +85,14 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
-        if self.last_ping + self.timeout + self.grace > now:
+        timeout_ends = self.last_ping + self.timeout
+        timeout_ends_plus_grace = timeout_ends + self.grace
+
+        #for ping in range(next_ping, next_ping_plus_grace):
+        if now >= timeout_ends and now <= timeout_ends_plus_grace:
             return "up"
-        
+        elif timeout_ends > now and self.last_ping < now:
+            return "excess"
         return "down"
           
     def in_grace_period(self):
