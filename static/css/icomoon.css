@@ -60,3 +60,6 @@
 .icon-settings:before {
   content: "\e8b8";
 }
+.icon-down-excess:before{
+  content: "\e7f8";
+}

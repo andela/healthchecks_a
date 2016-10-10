@@ -241,7 +241,7 @@ def log(request, code):
         early = older.created + check.timeout > newer.created + check.grace
         if early:
             ctx = {
-                "check.name_then_code": check.name_then_code
+                "check.name_then_code": check.name_then_code()
             }
             emails.excess(check.user.email, ctx)
 
