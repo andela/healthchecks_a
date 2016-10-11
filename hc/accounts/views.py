@@ -174,7 +174,7 @@ def profile(request):
                     user = _make_user(email)
                 
                 jobs = request.POST.getlist('jobs')
-                import ipdb; ipdb.set_trace()
+                #To get the checked jobs from the form
 
 
                 profile.invite(user)
@@ -229,7 +229,7 @@ def profile(request):
         "show_api_key": show_api_key,
         "checks":checks
     }
-    import ipdb; ipdb.set_trace()
+    #To see the checks that are now associated with the profile
 
     return render(request, "accounts/profile.html", ctx)
 
