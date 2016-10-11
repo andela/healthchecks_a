@@ -173,7 +173,10 @@ def update_name(request, code):
         check.tags = form.cleaned_data["tags"]
         check.save()
 
-    return redirect("hc-checks")
+    if check == "hc-checks":
+        return redirect("hc-checks")
+    else:
+        return redirect("hc-unresolved")
 
 
 @login_required

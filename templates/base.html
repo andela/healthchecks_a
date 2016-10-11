@@ -52,7 +52,7 @@
             </button>
             <a class="navbar-brand"
                 href="{% url 'hc-index' %}"
-                title="healthchecks.io - Monitor Cron Jobs">
+                title="cronchecks.herokuapp.com - Monitor Cron Jobs">
                 {% if request.user.is_authenticated %}
                 <img
                     id="logo"
@@ -80,7 +80,10 @@
                         <a href="{% url 'hc-checks' %}">Checks</a>
                     </li>
                     <li {% if page == 'checks' %} class="active" {% endif %}>
-                        <a href="{% url 'hc-unresolved' %}">Unresolved Checks</a>
+                        <a href="{% url 'hc-unresolved' %}">
+                            Unresolved Checks
+                            <sup><span id="notification">1</span></sup>
+                        </a>
                     </li>
                     <li {% if page == 'channels' %} class="active" {% endif %}>
                         <a href="{% url 'hc-channels' %}">Integrations</a>
