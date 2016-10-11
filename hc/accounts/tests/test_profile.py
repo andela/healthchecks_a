@@ -49,7 +49,7 @@ class ProfileTestCase(BaseTestCase):
     def test_add_team_member_checks_team_access_allowed_flag(self):
         self.client.login(username="charlie@example.org", password="password")
 
-        form = {"invite_team_member": "1", "email": "frank@example.org"}
+        form = {"invite_team_member": "1", "email": "bob@example.org"}
         r = self.client.post("/accounts/profile/", form)
         assert r.status_code == 403
 
