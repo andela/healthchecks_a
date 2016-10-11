@@ -307,6 +307,30 @@ def do_add_channel(request, data):
     else:
         return HttpResponseBadRequest()
 
+def do_add_channel(request, data):
+    form = AddChannelForm(data)
+    if form.is_valid():
+        channel = form.save(commit=False)
+        channel.user = request.team.user
+        channel.save()
+
+        # get a list of check names from a form
+        check_codes = []
+        # get instances of checks
+        checks = []
+
+        for check_code in check_codes:
+            checks.append(Check.objects.filter(code=check))
+
+        channel.assign_checks(checks)
+
+        if channel.kind == "email":
+            channel.send_verify_link()
+
+        return redirect("hc-channels")
+    else:
+        return HttpResponseBadRequest()
+
 
 @login_required
 def add_channel(request):

@@ -132,6 +132,7 @@ def check_token(request, username, token):
 @login_required
 def profile(request):
     profile = request.user.profile
+    jobs = []
     # Switch user back to its default team
     if profile.current_team_id != profile.id:
         request.team = profile
@@ -171,6 +172,10 @@ def profile(request):
                     user = User.objects.get(email=email)
                 except User.DoesNotExist:
                     user = _make_user(email)
+                
+                jobs = request.POST.getlist('jobs')
+                import ipdb; ipdb.set_trace()
+
 
                 profile.invite(user)
                 messages.success(request, "Invitation to %s sent!" % email)
@@ -198,7 +203,15 @@ def profile(request):
                 messages.success(request, "Team Name updated!")
 
     tags = set()
-    for check in Check.objects.filter(user=request.team.user):
+    checks = []
+    if jobs == []:
+        checks = Check.objects.filter(user=request.team.user)
+    else:
+        for job in jobs:
+        # filtered_checks = Check.objects.filter(user=request.team.user, )
+            checks.append(Check.objects.filter(pk=int(job)).first())
+
+    for check in checks:
         tags.update(check.tags_list())
 
     username = request.team.user.username
@@ -213,8 +226,10 @@ def profile(request):
         "page": "profile",
         "badge_urls": badge_urls,
         "profile": profile,
-        "show_api_key": show_api_key
+        "show_api_key": show_api_key,
+        "checks":checks
     }
+    import ipdb; ipdb.set_trace()
 
     return render(request, "accounts/profile.html", ctx)
 

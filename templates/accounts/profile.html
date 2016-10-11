@@ -30,7 +30,7 @@
                             name="reports_allowed"
                             type="checkbox"
                             {% if profile.reports_allowed %} checked {% endif %}>
-                        Each month send me a summary of my checks
+                        Each month send me a summary of my checks  
                     </label>
                     <button
                         name="update_reports_allowed"
@@ -258,8 +258,11 @@
                     <ul>
                         <li>Team Members can create and manage Checks and Integrations</li>
                         <li>Only the team owner (you) can view and edit billing settings</li>
+                        <li>You should select the jobs you want a member to receive notifications</li>
                     </ul>
+                   
                     <div class="form-group">
+                       
                         <label for="itm-email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-9">
                             <input
@@ -268,7 +271,16 @@
                                 id="itm-email"
                                 name="email"
                                 placeholder="friend@example.org">
-                        </div>
+
+                            <h4>Choose the jobs for which the member should receive notifications</h4>
+                            <div style="overflow:scroll; height:150px;">
+                            {% csrf_token %}
+                            {% for check in checks %}
+                            
+                                <input type="checkbox" name="jobs" id="check" value="{{check.id}}" />
+                                <label = >{{ check.name }}</label><br />
+                            {% endfor %}
+                            </div>
                     </div>
                 </div>
                 <div class="modal-footer">
