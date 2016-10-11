@@ -16,11 +16,14 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-HOST = "localhost"
-SECRET_KEY = "---"
+ENVIRONMENT = os.environ.get('APP_ENV')
+ENV_IS_DEVELOP = not ENVIRONMENT in ('staging', 'prod')
 DEBUG = True
-ALLOWED_HOSTS = []
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+
+HOST = "localhost" if ENV_IS_DEVELOP else "https://cronchecks.herokuapp.com/"
+SECRET_KEY = "---"
+ALLOWED_HOSTS = ['*']
+DEFAULT_FROM_EMAIL = 'cronchecks@herokuapp.com'
 USE_PAYMENTS = False
 
 
@@ -111,7 +114,7 @@ if os.environ.get("DB") == "mysql":
         }
     }
 
-if os.environ.get("APP_ENV") == "prod":
+if ENVIRONMENT == "prod":
     DATABASES['default'] = dj_database_url.config()
 
 
@@ -125,7 +128,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000"
+SITE_ROOT = "http://localhost:8000" if ENV_IS_DEVELOP else "https://cronchecks.herokuapp.com/"
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
@@ -138,7 +141,13 @@ STATICFILES_FINDERS = (
 )
 COMPRESS_OFFLINE = True
 
-EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+# SendGrid Integration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = 587
 
 # Slack integration -- override these in local_settings
 SLACK_CLIENT_ID = None
