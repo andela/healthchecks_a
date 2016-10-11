@@ -32,7 +32,7 @@ class ProfileTestCase(BaseTestCase):
     def test_it_adds_team_member(self):
         self.client.login(username="alice@example.org", password="password")
 
-        form = {"invite_team_member": "1", "email": "frank@example.org"}
+        form = {"invite_team_member": "1", "email": "bob@example.org"}
         r = self.client.post("/accounts/profile/", form)
         assert r.status_code == 200
 
@@ -42,7 +42,7 @@ class ProfileTestCase(BaseTestCase):
 
         ### Assert the existence of the member emails
 
-        self.assertTrue("frank@example.org" in member_emails)
+        self.assertIn("bob@example.org", member_emails)
 
         ###Assert that the email was sent and check email content
 
