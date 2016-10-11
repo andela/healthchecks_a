@@ -28,6 +28,8 @@ CHANNEL_KINDS = (("email", "Email"), ("webhook", "Webhook"),
 
 PO_PRIORITIES = {
     -2: "lowest",
+    -1: "low",		
+    0: "normal",
     1: "high",
     2: "emergency"
 }
