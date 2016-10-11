@@ -11,4 +11,3 @@ static/.DS_Store
 #IDE files
 .idea
 .idea/**
-/migrations
