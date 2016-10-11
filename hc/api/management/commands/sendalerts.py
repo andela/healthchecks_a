@@ -22,10 +22,10 @@ class Command(BaseCommand):
         going_down = query.filter(alert_after__lt=now, status="up")
         going_up = query.filter(alert_after__gt=now, status="down")
         nag_set = query.filter(nag_set=True, status="down")
-        nag_intervals = Check.objects.filter(nag__isnull=False)
+        
         
         # Don't combine this in one query so Postgres can query using index:
-        checks = list(going_down.iterator()) + list(going_up.iterator()) + list(nag_intervals.iterator())
+        checks = list(going_down.iterator()) + list(going_up.iterator()) + list(nag_set.iterator())
         if not checks:
             return False
 
