@@ -21,23 +21,23 @@ class TimeoutForm(forms.Form):
     timeout = forms.IntegerField(min_value=60, max_value=31104000)
     grace = forms.IntegerField(min_value=60, max_value=31104000)
 
+
 class AddChannelForm(forms.ModelForm):
 
-
     class Meta:
-        model=Channel
-        fields=['kind', 'value']
+        model = Channel
+        fields = ['kind', 'value']
 
     def clean_value(self):
-        value=self.cleaned_data["value"]
+        value = self.cleaned_data["value"]
         return value.strip()
 
 
 class AddWebhookForm(forms.Form):
-    error_css_class="has-error"
+    error_css_class = "has-error"
 
-    value_down=forms.URLField(max_length=1000, required=False)
-    value_up=forms.URLField(max_length=1000, required=False)
+    value_down = forms.URLField(max_length=1000, required=False)
+    value_up = forms.URLField(max_length=1000, required=False)
 
     def get_value(self):
         return "{value_down}\n{value_up}".format(**self.cleaned_data)
