@@ -4,7 +4,8 @@ $(function () {
     var HOUR = {name: "hour", nsecs: MINUTE.nsecs * 60};
     var DAY = {name: "day", nsecs: HOUR.nsecs * 24};
     var WEEK = {name: "week", nsecs: DAY.nsecs * 7};
-    var UNITS = [WEEK, DAY, HOUR, MINUTE];
+    var MONTH ={name:'month', nsecs: DAY.nsecs * 30}
+    var UNITS = [MONTH, WEEK, DAY, HOUR, MINUTE];
 
     var secsToText = function(total) {
         var remainingSeconds = Math.floor(total);
@@ -36,14 +37,17 @@ $(function () {
         connect: "lower",
         range: {
             'min': [60, 60],
-            '33%': [3600, 3600],
-            '66%': [86400, 86400],
-            '83%': [604800, 604800],
-            'max': 2592000,
+            '9.5%': [3600, 3600],
+            '20.5%': [86400, 86400],
+            '34.5%': [604800, 604800],
+            '49.5%': [2592000, 2592000],
+            '63.5%': [7776000, 7776000],
+            '80.5%': [15552000, 15552000],
+            'max': 31104000,
         },
         pips: {
             mode: 'values',
-            values: [60, 1800, 3600, 43200, 86400, 604800, 2592000],
+            values: [60,3600, 86400, 604800, 2592000,7776000,15552000,31104000],
             density: 4,
             format: {
                 to: secsToText,
@@ -65,14 +69,17 @@ $(function () {
         connect: "lower",
         range: {
             'min': [60, 60],
-            '33%': [3600, 3600],
-            '66%': [86400, 86400],
-            '83%': [604800, 604800],
-            'max': 2592000,
+            '9.5%': [3600, 3600],
+            '20.5%': [86400, 86400],
+            '34.5%': [604800, 604800],
+            '49.5%': [2592000, 2592000],
+            '63.5%': [7776000, 7776000],
+            '80.5%': [15552000, 15552000],
+            'max': 31104000,
         },
         pips: {
             mode: 'values',
-            values: [60, 1800, 3600, 43200, 86400, 604800, 2592000],
+            values: [60,3600, 86400, 604800, 2592000,7776000,15552000,31104000],
             density: 4,
             format: {
                 to: secsToText,
