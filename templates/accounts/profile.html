@@ -39,6 +39,42 @@
                 </form>
             </div>
         </div>
+        <!--Weekly reports-->
+        <div class="panel panel-default">
+            <div class="panel-body settings-block">
+                <form method="post">
+                    {% csrf_token %}
+                    <h2>Weekly Reports</h2>
+                    <label>
+                        <input type="checkbox" name="weekly_reports_allowed"
+                        {% if profile.weekly_reports_allowed %} checked {% endif %}>
+                        Send me a weekly report
+                    </label>
+                    <button name="update_weekly_reports_allowed"
+                        type="submit" class="btn btn-default pull-right">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!--Daily reports-->
+        <div class="panel panel-default">
+            <div class="panel-body settings-block">
+                <form method="post">
+                    {% csrf_token %}
+                    <h2>Daily Reports</h2>
+                    <label>
+                        <input type="checkbox" name="daily_reports_allowed"
+                        {% if profile.daily_reports_allowed %} checked {% endif %}>
+                        Send me daily reports
+                    </label>
+                    <button name="update_daily_reports_allowed"
+                        type="submit" class="btn btn-default pull-right">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="col-sm-6">
