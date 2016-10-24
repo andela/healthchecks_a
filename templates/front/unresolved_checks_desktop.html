@@ -11,13 +11,10 @@
         <th>Last Ping</th>
         <th></th>
     </tr>
-    {% for check in checks %}
-    {% if check.get_status == "down" %}
+    {% for check in unresolved_checks %}
     <tr class="checks-row">
         <td class="indicator-cell">
-            {% if check.get_status == "down" %}
-                <span class="status icon-down"></span>
-            {% endif %}
+            <span class="status icon-down"></span>
         </td>
         <td class="name-cell">
             <div data-name="{{ check.name }}"
@@ -26,7 +23,7 @@
                     class="my-checks-name {% if not check.name %}unnamed{% endif %}">
                 <div>{{ check.name|default:"unnamed" }}</div>
                 {% for tag in check.tags_list %}
-                <span class="label label-tag">{{ tag }}</span>
+                    <span class="label label-tag">{{ tag }}</span>
                 {% endfor %}
             </div>
         </td>
@@ -104,7 +101,6 @@
             </div>
         </td>
     </tr>
-    {% endif %}
     {% endfor %}
 
 </table>

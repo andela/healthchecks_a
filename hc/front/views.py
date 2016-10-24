@@ -47,9 +47,12 @@ def my_checks(request):
             elif check.in_grace_period():
                 grace_tags.add(tag)
 
+    num_unresolved_checks = request.session.get("num_unresolved_checks")
+
     ctx = {
         "page": "checks",
         "checks": checks,
+        "num_unresolved": num_unresolved_checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
         "down_tags": down_tags,
@@ -62,21 +65,25 @@ def my_checks(request):
 @login_required
 def unresolved_checks(request):
     q = Check.objects.filter(user=request.team.user)
-    unresolved_checks = list(q)
+    user_checks = list(q)
+    unresolved_checks = []
 
     counter = Counter()
     down_tags = set()
-    for check in unresolved_checks:
+    for check in user_checks:
         status = check.get_status()
         for tag in check.tags_list():
             counter[tag] += 1
 
             if status == "down":
                 down_tags.add(tag)
+                unresolved_checks.append(check)
+
+    request.session["num_unresolved_checks"] = len(unresolved_checks)
 
     ctx = {
         "page": "unresolved_checks",
-        "checks": unresolved_checks,
+        "unresolved_checks": unresolved_checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
         "down_tags": down_tags,
@@ -172,11 +179,8 @@ def update_name(request, code):
         check.name = form.cleaned_data["name"]
         check.tags = form.cleaned_data["tags"]
         check.save()
-
-    if check == "hc-checks":
-        return redirect("hc-checks")
-    else:
-        return redirect("hc-unresolved")
+    
+    return redirect(request.GET["next"])       
 
 
 @login_required

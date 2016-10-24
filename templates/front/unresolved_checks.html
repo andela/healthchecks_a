@@ -30,7 +30,7 @@
     <div class="col-sm-12">
 
 
-    {% if checks %}
+    {% if unresolved_checks %}
         {% include "front/unresolved_checks_mobile.html" %}
         {% include "front/unresolved_checks_desktop.html" %}
     {% else %}
@@ -40,7 +40,7 @@
 </div>
 <div id="update-name-modal" class="modal">
     <div class="modal-dialog">
-        <form id="update-name-form" class="form-horizontal" method="post">
+        <form id="uc-update-name-form" class="form-horizontal" method="post">
             {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,7 +99,7 @@
 
 <div id="update-timeout-modal" class="modal">
     <div class="modal-dialog">
-        <form id="update-timeout-form" method="post">
+        <form id="uc-update-timeout-form" method="post">
             {% csrf_token %}
             <input type="hidden" name="timeout" id="update-timeout-timeout" />
             <input type="hidden" name="grace" id="update-timeout-grace" />
