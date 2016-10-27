@@ -148,7 +148,6 @@ def docs_api(request):
 
     return render(request, "front/docs_api.html", ctx)
 
-
 def about(request):
     return render(request, "front/about.html", {"page": "about"})
 
@@ -179,9 +178,7 @@ def update_name(request, code):
         check.name = form.cleaned_data["name"]
         check.tags = form.cleaned_data["tags"]
         check.save()
-    
-    return redirect(request.GET["next"])       
-
+    return redirect(request.GET["next"])
 
 @login_required
 @uuid_or_400
@@ -199,7 +196,6 @@ def update_timeout(request, code):
         check.save()
 
     return redirect("hc-checks")
-
 
 @login_required
 @uuid_or_400

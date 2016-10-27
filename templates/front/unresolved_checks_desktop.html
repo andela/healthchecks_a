@@ -12,6 +12,7 @@
         <th></th>
     </tr>
     {% for check in unresolved_checks %}
+    {% if check.get_status == "down" %}
     <tr class="checks-row">
         <td class="indicator-cell">
             <span class="status icon-down"></span>
