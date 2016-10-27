@@ -33,11 +33,11 @@ class MyChecksTestCase(BaseTestCase):
 
     def test_it_shows_red_check(self):
         self.check.last_ping = timezone.now() - td(days=3)
-        self.check.status = "down"
+        self.check.status = "up"
         self.check.save()
 
         self.client.login(username="alice@example.org", password="password")
-        r = self.client.get("/checks/")
+        r = self.client.get("/unresolved/")
 
         # Desktop
         self.assertContains(r, "icon-down")
