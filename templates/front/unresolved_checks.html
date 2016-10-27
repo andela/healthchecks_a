@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <h1>
         {% if request.team == request.user.profile %}
-            My Checks
+            Unresolved Checks
         {% else %}
             {{ request.team.team_name }}
         {% endif %}
@@ -18,12 +18,8 @@
     {% if tags %}
     <div id="my-checks-tags" class="col-sm-12">
         {% for tag, count in tags %}
-            {% if tag not in down_tags %}
-            {% if tag in grace_tags %}
-                <button class="btn btn-warning btn-xs" data-toggle="button">{{ tag }}</button>
-            {% else %}
-                <button class="btn btn-default btn-xs" data-toggle="button">{{ tag }}</button>
-            {% endif %}
+            {% if tag in down_tags %}
+                <button class="btn btn-danger btn-xs" data-toggle="button">{{ tag }}</button>
             {% endif %}
         {% endfor %}
     </div>
@@ -34,26 +30,17 @@
     <div class="col-sm-12">
 
 
-    {% if checks %}
-        {% include "front/my_checks_mobile.html" %}
-        {% include "front/my_checks_desktop.html" %}
+    {% if unresolved_checks %}
+        {% include "front/unresolved_checks_mobile.html" %}
+        {% include "front/unresolved_checks_desktop.html" %}
     {% else %}
     <div class="alert alert-info">You don't have any checks yet.</div>
     {% endif %}
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-12">
-        <form method="post" action="{% url 'hc-add-check' %}" class="text-center">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg" value="Add Check">
-        </form>
-    </div>
-</div>
-
 <div id="update-name-modal" class="modal">
     <div class="modal-dialog">
-        <form id="mc-update-name-form" class="form-horizontal" method="post">
+        <form id="uc-update-name-form" class="form-horizontal" method="post">
             {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
@@ -112,7 +99,7 @@
 
 <div id="update-timeout-modal" class="modal">
     <div class="modal-dialog">
-        <form id="mc-update-timeout-form" method="post">
+        <form id="uc-update-timeout-form" method="post">
             {% csrf_token %}
             <input type="hidden" name="timeout" id="update-timeout-timeout" />
             <input type="hidden" name="grace" id="update-timeout-grace" />

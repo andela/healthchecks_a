@@ -53,6 +53,13 @@ body {
     font-size: small;
 }
 
+#notification {
+  color:#d9534f;
+  display: inline-block; 
+  position: relative; 
+  padding: 2px 5px; 
+}
+
 .status {
     font-size: 24px;
 }

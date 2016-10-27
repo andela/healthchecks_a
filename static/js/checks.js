@@ -99,8 +99,10 @@ $(function () {
 
     $(".my-checks-name").click(function() {
         var $this = $(this);
-
-        $("#update-name-form").attr("action", $this.data("url"));
+        var checksPageFormUrl = $this.data("url") + "?next=hc-checks";
+        var unresolvedChecksPageFormUrl = $this.data("url") + "?next=hc-unresolved";
+        $("#mc-update-name-form").attr("action", checksPageFormUrl);
+        $("#uc-update-name-form").attr("action", unresolvedChecksPageFormUrl);
         $("#update-name-input").val($this.data("name"));
         $("#update-tags-input").val($this.data("tags"));
         $('#update-name-modal').modal("show");
@@ -111,8 +113,10 @@ $(function () {
 
     $(".timeout-grace").click(function() {
         var $this = $(this);
-
-        $("#update-timeout-form").attr("action", $this.data("url"));
+        var checksPageFormUrl = $this.data("url") + "?next=hc-checks";
+        var unresolvedChecksPageFormUrl = $this.data("url") + "?next=hc-unresolved";
+        $("#mc-update-timeout-form").attr("action", checksPageFormUrl);
+        $("#uc-update-timeout-form").attr("action", unresolvedChecksPageFormUrl);
         periodSlider.noUiSlider.set($this.data("timeout"))
         graceSlider.noUiSlider.set($this.data("grace"))
         $('#update-timeout-modal').modal({"show":true, "backdrop":"static"});

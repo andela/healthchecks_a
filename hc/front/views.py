@@ -47,9 +47,12 @@ def my_checks(request):
             elif check.in_grace_period():
                 grace_tags.add(tag)
 
+    num_unresolved_checks = request.session.get("num_unresolved_checks")
+
     ctx = {
         "page": "checks",
         "checks": checks,
+        "num_unresolved": num_unresolved_checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
         "down_tags": down_tags,
@@ -59,6 +62,35 @@ def my_checks(request):
 
     return render(request, "front/my_checks.html", ctx)
 
+@login_required
+def unresolved_checks(request):
+    q = Check.objects.filter(user=request.team.user)
+    user_checks = list(q)
+    unresolved_checks = []
+
+    counter = Counter()
+    down_tags = set()
+    for check in user_checks:
+        status = check.get_status()
+        for tag in check.tags_list():
+            counter[tag] += 1
+
+            if status == "down":
+                down_tags.add(tag)
+                unresolved_checks.append(check)
+
+    request.session["num_unresolved_checks"] = len(unresolved_checks)
+
+    ctx = {
+        "page": "unresolved_checks",
+        "unresolved_checks": unresolved_checks,
+        "now": timezone.now(),
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+
+    return render(request, "front/unresolved_checks.html", ctx)
 
 def _welcome_check(request):
     check = None
@@ -116,7 +148,6 @@ def docs_api(request):
 
     return render(request, "front/docs_api.html", ctx)
 
-
 def about(request):
     return render(request, "front/about.html", {"page": "about"})
 
@@ -147,9 +178,7 @@ def update_name(request, code):
         check.name = form.cleaned_data["name"]
         check.tags = form.cleaned_data["tags"]
         check.save()
-
-    return redirect("hc-checks")
-
+    return redirect(request.GET["next"])
 
 @login_required
 @uuid_or_400
@@ -167,7 +196,6 @@ def update_timeout(request, code):
         check.save()
 
     return redirect("hc-checks")
-
 
 @login_required
 @uuid_or_400

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}healthchecks.io - Monitor Cron Jobs. Get Notified When Your Cron Jobs Fail{% endblock %}</title>
+    <title>{% block title %}cronchecks.herokuapp.com - Monitor Cron Jobs. Get Notified When Your Cron Jobs Fail{% endblock %}</title>
     <meta name="description" content="Monitor and Get Notified When Your Cron Jobs Fail. Free alternative to Cronitor and Dead Man's Snitch.">
     <meta name="keywords" content="monitor cron jobs daemon background worker service cronjob monitoring crontab alert notify cronitor deadmanssnitch webhook">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="{% static 'css/my_checks.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/my_checks_mobile.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/my_checks_desktop.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/unresolved_checks.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/unresolved_checks_mobile.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/unresolved_checks_desktop.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/pricing.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/syntax.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/channels.css' %}" type="text/css">
@@ -49,7 +52,7 @@
             </button>
             <a class="navbar-brand"
                 href="{% url 'hc-index' %}"
-                title="healthchecks.io - Monitor Cron Jobs">
+                title="cronchecks.herokuapp.com - Monitor Cron Jobs">
                 {% if request.user.is_authenticated %}
                 <img
                     id="logo"
@@ -76,11 +79,15 @@
                     <li {% if page == 'checks' %} class="active" {% endif %}>
                         <a href="{% url 'hc-checks' %}">Checks</a>
                     </li>
-
+                    <li {% if page == 'unresolved_checks' %} class="active" {% endif %}>
+                        <a href="{% url 'hc-unresolved' %}">
+                            Unresolved Checks
+                            <sup><span id="notification">{{num_unresolved}}</span></sup>
+                        </a>
+                    </li>
                     <li {% if page == 'channels' %} class="active" {% endif %}>
                         <a href="{% url 'hc-channels' %}">Integrations</a>
                     </li>
-
                 {% endif %}
 
 
