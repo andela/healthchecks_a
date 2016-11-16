@@ -23,6 +23,7 @@ class SetPasswordForm(forms.Form):
 
 class InviteTeamMemberForm(forms.Form):
     email = LowercaseEmailField()
+    jobs = forms.ComboField()
 
 
 class RemoveTeamMemberForm(forms.Form):

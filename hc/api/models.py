@@ -28,7 +28,7 @@ CHANNEL_KINDS = (("email", "Email"), ("webhook", "Webhook"),
 
 PO_PRIORITIES = {
     -2: "lowest",
-    -1: "low",
+    -1: "low",		
     0: "normal",
     1: "high",
     2: "emergency"
@@ -58,6 +58,14 @@ class Check(models.Model):
             return self.name
 
         return str(self.code)
+    def __str__(self):
+        return self.name_then_code()
+
+    # def change_check_owner(self,check):
+    #     # retrieve the new check owner from USER
+
+    #     # assign the new user as the check owner
+    #     pass
 
     def url(self):
         return settings.PING_ENDPOINT + str(self.code)
