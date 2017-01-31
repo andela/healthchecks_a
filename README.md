@@ -1,4 +1,4 @@
-# healthchecks  [![Build Status](https://travis-ci.org/4bic/healthchecks_a.svg?branch=master)](https://travis-ci.org/4bic/healthchecks_a)
+# healthchecks  [![Build Status](https://travis-ci.org/4bic/healthchecks_a.svg?branch=master)](https://travis-ci.org/4bic/healthchecks_a)    [![Coverage Status](https://coveralls.io/repos/github/4bic/healthchecks_a/badge.svg?branch=master)](https://coveralls.io/github/4bic/healthchecks_a?branch=master)     
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
 
