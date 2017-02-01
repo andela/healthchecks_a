@@ -46,3 +46,45 @@ class Bot(models.Model):
     def send_message(self, chat_id, text, parse_mode=None, disable_web_page_preview=None, **kwargs):
         self._bot.sendMessage(chat_id=chat_id, text=text, parse_mode=parse_mode,
                               disable_web_page_preview=disable_web_page_preview, **kwargs)
+
+class User(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    first_name = models.CharField(_('First name'), max_length=255)
+    last_name = models.CharField(_('Last name'), max_length=255, blank=True, null=True)
+    username = models.CharField(_('User name'), max_length=255, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+
+    def __str__(self):
+        return "%s" % self.first_name
+
+
+class Chat(models.Model):
+
+    PRIVATE, GROUP, SUPERGROUP, CHANNEL = 'private', 'group', 'supergroup', 'channel'
+
+    TYPE_CHOICES = (
+        (PRIVATE, _('Private')),
+        (GROUP, _('Group')),
+        (SUPERGROUP, _('Supergroup')),
+        (CHANNEL, _('Channel')),
+    )
+
+    id = models.BigIntegerField(primary_key=True)
+    type = models.CharField(max_length=255, choices=TYPE_CHOICES)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Chat')
+        verbose_name_plural = _('Chats')
+
+    def __str__(self):
+        return "%s" % (self.title or self.username)
+
+    def is_authenticated(self):
+        return hasattr(self, 'auth_token') and not self.auth_token.expired()
